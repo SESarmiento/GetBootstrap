@@ -42,12 +42,12 @@ namespace System
             }
         }
 
-        public static void Write(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = true)
+        public static void Write(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = false)
         {
             Writer(format, type, style, fill, beep);
         }
 
-        public static void WriteLine(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = true)
+        public static void WriteLine(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = false)
         {
             Writer(format, type, style, fill, beep);
             Console.WriteLine();

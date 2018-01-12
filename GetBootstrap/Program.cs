@@ -22,7 +22,7 @@ namespace GetBootstrap
             ProgressBar pb1 = new ProgressBar();
             ProgressBar pb2 = new ProgressBar();
 
-            Bootstrap.WriteLine("Customizable Progress Bar", type: BootstrapType.Info);
+            Bootstrap.WriteLine("Customize Progress Bar", type: BootstrapType.Info);
 
             pb.Maximum = Enum.GetNames(typeof(BootstrapType)).Length * 3;
             pb.Width = 50;

@@ -12,6 +12,7 @@ namespace GetBootstrap
     {
         static void Main(string[] args)
         {
+            Console.Title = $"GetBootstrap v{Assembly.GetEntryAssembly().GetName().Version}";
             Bootstrap.Write("DEVELOPER:", BootstrapType.Info, BootsrapStyle.Alert);
             Typewriter.Write( " Leonel Sarmiento - ");
             Typewriter.WriteLine("Leonel.Sarmiento@outlook.com", BootstrapType.Success);

@@ -14,10 +14,11 @@ namespace GetBootstrap
         {
             Console.Title = $"GetBootstrap v{Assembly.GetEntryAssembly().GetName().Version}";
             Bootstrap.Write("DEVELOPER:", BootstrapType.Info, BootsrapStyle.Alert);
-            Typewriter.Write( " Leonel Sarmiento - ");
-            Typewriter.WriteLine("Leonel.Sarmiento@outlook.com", BootstrapType.Success);
+            Bootstrap.Write( " Leonel Sarmiento - ");
+            Bootstrap.WriteLine("Leonel.Sarmiento@outlook.com", BootstrapType.Success);
             Bootstrap.Write("BOOTSTRAP:", BootstrapType.Magenta, BootsrapStyle.Alert);
-            Typewriter.WriteLine($" GetBootstrap {Assembly.GetEntryAssembly().GetName().Version}");
+            Bootstrap.WriteLine($" GetBootstrap {Assembly.GetEntryAssembly().GetName().Version}");
+            Console.ReadKey();
 
             ProgressBar pb = new ProgressBar();
             ProgressBar pb1 = new ProgressBar();
@@ -46,7 +47,7 @@ namespace GetBootstrap
                 pb.Increment();
                 pb1.Increment();
                 pb2.Increment();
-                Typewriter.WriteLine($"BOOTSTRAPER", style: BootsrapStyle.Alert, type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name), fill: true);
+                Typewriter.WriteLine($"{name}", style: BootsrapStyle.Alert, type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name), fill: true);
             }
 
             Bootstrap.WriteLine("Light and Dark Themes", type: BootstrapType.Info);
@@ -55,7 +56,7 @@ namespace GetBootstrap
             {
                 pb.Increment();
                 pb1.Increment();
-                Typewriter.Write($"BOOTSTRAPER", style: BootsrapStyle.Alert, type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name), fill: true);
+                Typewriter.Write($"{name}", style: BootsrapStyle.Alert, type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name), fill: true);
             }
 
             Console.WriteLine();
@@ -63,7 +64,7 @@ namespace GetBootstrap
             foreach (var name in Enum.GetNames(typeof(BootstrapType)))
             {
                 pb.Increment();
-                Bootstrap.Write($"BOOTSTRAPER", type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name));
+                Bootstrap.Write($"{name}", type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name));
             }
             Console.ReadLine();
         }

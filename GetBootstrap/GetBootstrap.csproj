@@ -49,6 +49,10 @@
     <Compile Include="Bootstrap.Designer.cs">
       <DependentUpon>Bootstrap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\Logger.Core.cs">
+      <DependentUpon>Logger.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Logger.cs" />
     <Compile Include="Extensions\ProgressBar.cs" />
     <Compile Include="Extensions\Typewriter.Core.cs">
       <DependentUpon>Typewriter.cs</DependentUpon>
@@ -65,6 +69,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Icon.ico" />
+    <Content Include="LoggerThemes\default.xslt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

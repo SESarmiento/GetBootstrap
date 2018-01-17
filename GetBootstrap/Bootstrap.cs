@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Extensions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace System
     public static partial class Bootstrap
     {
         public static BootstrapTheme Theme { get => _theme; set => _theme = value; }
+        public static Logger Logger { get => _logger; set => _logger = value; }
 
         public static int BeepDuration
         {

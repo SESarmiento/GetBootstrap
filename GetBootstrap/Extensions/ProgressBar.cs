@@ -14,13 +14,14 @@ namespace System.Extensions
         private int _csrleft;
         private int _progwidth;
         private int _value = 0;
-        private int _maxvalue = 100;
+        private int _maxvalue;
         private float _width = 50;
         private bool _showPercent = true;
         private bool _showSeparator = true;
 
         public int Value { get => _value; set => _value = value; }
-        public int Maximum { get => _maxvalue; set => _maxvalue = value; }
+        public int MaxValue { get => _maxvalue; set => _maxvalue = value; }
+
         public float Width
         {
             get => _width; set
@@ -33,7 +34,6 @@ namespace System.Extensions
                 {
                     throw new ArgumentOutOfRangeException("Width must not less than to 0");
                 }
-
                 _width = value;
             }
         }
@@ -43,6 +43,11 @@ namespace System.Extensions
         public ConsoleColor SeparatorColor { get; set; } = ConsoleColor.Gray;
         public bool ShowPercent { get => _showPercent; set => _showPercent = value; }
         public bool ShowSeparator { get => _showSeparator; set => _showSeparator = value; }
+
+        public ProgressBar(int maxValue = 100)
+        {
+            _maxvalue = maxValue;
+        }
 
         public void Write()
         {
@@ -59,8 +64,6 @@ namespace System.Extensions
                 Console.Write(_showSeparator ? "_" : " ");
                 _progwidth++;
             }
-
-
         }
 
         public void WriteLine()

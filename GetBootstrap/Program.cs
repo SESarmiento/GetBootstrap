@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Extensions;
 using System.Linq;
 using System.Reflection;
@@ -12,32 +13,33 @@ namespace GetBootstrap
     {
         static void Main(string[] args)
         {
-            Console.Title = $"GetBootstrap v{Assembly.GetEntryAssembly().GetName().Version}";
-            Bootstrap.Logger = Logger.GetLogger("Test3");
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+
+            Console.Title = $"GetBootstrap v{version}";
+            Bootstrap.Logger = Logger.GetLogger("GetBootstrap");
             Bootstrap.Write("DEVELOPER:", BootstrapType.Info, BootsrapStyle.Alert);
             Bootstrap.Write( " Leonel Sarmiento - ");
             Bootstrap.WriteLine("Leonel.Sarmiento@outlook.com", BootstrapType.Success);
             Bootstrap.Write("BOOTSTRAP:", BootstrapType.Magenta, BootsrapStyle.Alert);
-            Bootstrap.WriteLine($" GetBootstrap {Assembly.GetEntryAssembly().GetName().Version}");
+            Bootstrap.WriteLine($" Build {Assembly.GetEntryAssembly().GetName().Version}");
+            Bootstrap.Write("BOOTSTRAP:", BootstrapType.Magenta, BootsrapStyle.Alert);
+            Bootstrap.WriteLine($" Release {version}");
             Console.ReadKey();
-
-            ProgressBar pb = new ProgressBar();
-            ProgressBar pb1 = new ProgressBar();
-            ProgressBar pb2 = new ProgressBar();
-
+            
             Bootstrap.WriteLine("Customize Progress Bar", type: BootstrapType.Info);
 
-            pb.Maximum = Enum.GetNames(typeof(BootstrapType)).Length * 3;
+            ProgressBar pb = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 3);
             pb.Width = 50;
             pb.WriteLine();
-
-            Bootstrap.Logger = Logger.GetLogger("Test4");
-            pb1.Maximum = Enum.GetNames(typeof(BootstrapType)).Length * 2;
+            
+            ProgressBar pb1 = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 2);
             pb1.ProgressColor = ConsoleColor.DarkBlue;
             pb1.Width = 75;
             pb1.WriteLine();
 
-            pb2.Maximum = Enum.GetNames(typeof(BootstrapType)).Length * 1;
+            ProgressBar pb2 = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 1);
             pb2.ProgressColor = ConsoleColor.DarkMagenta;
             pb2.Width = 100;
             pb2.WriteLine();

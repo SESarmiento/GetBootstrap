@@ -30,8 +30,8 @@ Download the GetBootstrap and add it as reference in your Console Application
 
 ```csharp
 foreach(var name in Enum.GetNames(typeof(BootstrapType))) {
-	Bootstrap.WriteLine($ "BOOTSTRAPER", style: BootsrapStyle.Text, type: (BootstrapType) Enum.Parse(typeof(BootstrapType), name));
-	Bootstrap.WriteLine($ "BOOTSTRAPER", style: BootsrapStyle.Alert, type: (BootstrapType) Enum.Parse(typeof(BootstrapType), name), fill: true);
+	Bootstrap.WriteLine($"BOOTSTRAPER", style: BootsrapStyle.Text, type: (BootstrapType) Enum.Parse(typeof(BootstrapType), name));
+	Bootstrap.WriteLine($"BOOTSTRAPER", style: BootsrapStyle.Alert, type: (BootstrapType) Enum.Parse(typeof(BootstrapType), name), fill: true);
 }
 ```
 
@@ -39,30 +39,29 @@ foreach(var name in Enum.GetNames(typeof(BootstrapType))) {
 
 ```csharp
 foreach(var name in Enum.GetNames(typeof(BootstrapType))) {
-	Typewriter.WriteLine($ "BOOTSTRAPER", style: BootsrapStyle.Text, type: (BootstrapType) Enum.Parse(typeof(BootstrapType), name));
-	Typewriter.WriteLine($ "BOOTSTRAPER", style: BootsrapStyle.Alert, type: (BootstrapType) Enum.Parse(typeof(BootstrapType), name), fill: true);
+	Typewriter.WriteLine($"BOOTSTRAPER", style: BootsrapStyle.Text, type: (BootstrapType) Enum.Parse(typeof(BootstrapType), name));
+	Typewriter.WriteLine($"BOOTSTRAPER", style: BootsrapStyle.Alert, type: (BootstrapType) Enum.Parse(typeof(BootstrapType), name), fill: true);
 }
 ```
 
 ##### Console ProgressBar
 
 ```csharp
-ProgressBar probar = new ProgressBar() {
+ProgressBar probar = new ProgressBar(100) {
 	Width = 100,
-	Maximum = 100,
 	ProgressColor = ConsoleColor.DarkCyan
 };
-probar.write();
-for (int i = 0; i < probar.Maximum; i++) {
+probar.WriteLine();
+for (int i = 0; i < probar.MaxValue; i++) {
 	probar.Increment();
-	Bootstrap.Write($ "{i}");
+	Bootstrap.Write($"{i}");
 	Thread.Sleep(100);
 }
 ```
 ##### GetBootstrap Logger
 
 ```csharp
-Bootstrap.Logger = Logger.GetLogger("Test Logger Name");
+Bootstrap.Logger = Logger.GetLogger("GetBootstrap");
 ```
 
 ## Built With

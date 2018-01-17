@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Extensions;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace System
         private static BootstrapTheme _theme;
         private static int _frequency = 800;
         private static int _duration = 100;
+        private static Logger _logger;
         internal static object[] _threads = new object[] { };
 
         static void Writer(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = false)
@@ -26,6 +28,8 @@ namespace System
 
             lock(_threads)
             {
+                WriteLog(type, format);
+
                 for (int i = 0; i < chars.Length; i++)
                 {
                     Console.Write(chars[i]);
@@ -33,6 +37,40 @@ namespace System
             }
 
             Console.ResetColor();
+        }
+
+        private static void WriteLog(BootstrapType type, string format)
+        {
+            if (_logger == null)
+            {
+                return;
+            }
+
+            switch (type)
+            {
+                case BootstrapType.Success:
+                    _logger.Pass(format);
+                    break;
+                case BootstrapType.Info:
+                    _logger.Info(format);
+                    break;
+                case BootstrapType.Warning:
+                    _logger.Warn(format);
+                    break;
+                case BootstrapType.Danger:
+                    _logger.Fatal(format);
+                    break;
+                case BootstrapType.Magenta:
+                    _logger.Magenta(format);
+                    break;
+                case BootstrapType.Cobalt:
+                    _logger.Cobalt(format);
+                    break;
+                case BootstrapType.Default:
+                default:
+                    _logger.Debug(format);
+                    break;
+            }
         }
 
         internal static void PerformBeep(bool beep)

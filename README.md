@@ -6,6 +6,8 @@ This project created to ease the customization of CSharp Console Application and
 [![Pre-Master build status](https://ci.appveyor.com/api/projects/status/btq8youx0uc1lnxj/branch/pre-master?svg=true&passingText=pre-master%20•%20pass&failingText=pre-master%20•%20fail&pendingText=pre-master%20•%20pending)](https://ci.appveyor.com/project/devlsarmiento/getbootstrap/branch/pre-master)
 [![Code-Integration build status](https://ci.appveyor.com/api/projects/status/btq8youx0uc1lnxj/branch/code-integration?svg=true&passingText=code-integration%20•%20pass&failingText=code-integration%20•%20fail&pendingText=code-integration%20•%20pending)](https://ci.appveyor.com/project/devlsarmiento/getbootstrap/branch/code-integration)
 
+<img src="https://github.com/devlsarmiento/GetBootstrap/blob/code-integration/.screenshots/demo.gif" height="300px"/>
+
 ## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -25,6 +27,13 @@ Download the GetBootstrap and add it as reference in your Console Application
 ```
 
 ### Features
+
+| Class		| Preview	| Details
+| :---		| :---:		| :---
+| Bootstrap	| [View](https://github.com/devlsarmiento/GetBootstrap/blob/code-integration/.screenshots/normal.png)	| Customized Console Writer.
+| Typewriter	| [View](https://github.com/devlsarmiento/GetBootstrap/blob/code-integration/.screenshots/typewriter.gif)	| Typewriter effects in console.
+| ProgressBar	| [View](https://github.com/devlsarmiento/GetBootstrap/blob/code-integration/.screenshots/progressbar.gif)	| Allow to used progress bar in console.
+| Logger	| [View](https://github.com/devlsarmiento/GetBootstrap/blob/code-integration/.screenshots/logger.png)	| Create a customizable logs writen in xslt.
 
 ##### Customized Console Writer
 

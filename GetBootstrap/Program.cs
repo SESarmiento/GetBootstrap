@@ -13,6 +13,7 @@ namespace GetBootstrap
         static void Main(string[] args)
         {
             Console.Title = $"GetBootstrap v{Assembly.GetEntryAssembly().GetName().Version}";
+            Bootstrap.Logger = Logger.GetLogger("Test3");
             Bootstrap.Write("DEVELOPER:", BootstrapType.Info, BootsrapStyle.Alert);
             Bootstrap.Write( " Leonel Sarmiento - ");
             Bootstrap.WriteLine("Leonel.Sarmiento@outlook.com", BootstrapType.Success);
@@ -30,6 +31,7 @@ namespace GetBootstrap
             pb.Width = 50;
             pb.WriteLine();
 
+            Bootstrap.Logger = Logger.GetLogger("Test4");
             pb1.Maximum = Enum.GetNames(typeof(BootstrapType)).Length * 2;
             pb1.ProgressColor = ConsoleColor.DarkBlue;
             pb1.Width = 75;

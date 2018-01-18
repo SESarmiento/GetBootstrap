@@ -28,11 +28,11 @@ namespace System.Extensions
             {
                 if (value > 100)
                 {
-                    throw new ArgumentOutOfRangeException("Width must not greater than to 100");
+                    throw new ArgumentOutOfRangeException("Width must not be greater than to 100");
                 }
                 else if (value < 0)
                 {
-                    throw new ArgumentOutOfRangeException("Width must not less than to 0");
+                    throw new ArgumentOutOfRangeException("Width must not be less than to 0");
                 }
                 _width = value;
             }
@@ -49,8 +49,14 @@ namespace System.Extensions
             _maxvalue = maxValue;
         }
 
-        public void Write()
+        public void DrawProgressBar()
         {
+            DrawProgressBar((int)_width);
+        }
+
+        public void DrawProgressBar(int width)
+        {
+            Width = width;
             _cwidth = (int)(((Console.BufferWidth - (_showPercent ? 7 : 0)) / 100f) * _width);
             _cheight = Console.BufferHeight;
             _csrtop = Console.CursorTop;
@@ -64,11 +70,6 @@ namespace System.Extensions
                 Console.Write(_showSeparator ? "_" : " ");
                 _progwidth++;
             }
-        }
-
-        public void WriteLine()
-        {
-            Write();
             Console.WriteLine();
         }
 
@@ -79,32 +80,37 @@ namespace System.Extensions
                 _value += increment;
                 if (_value <= _maxvalue)
                 {
-                    int _cursortop = Console.CursorTop;
-                    int _cursorleft = Console.CursorLeft;
-
-                    Console.CursorTop = _csrtop;
-                    Console.CursorLeft = _csrleft;
-                    Console.BackgroundColor = ProgressColor;
-
-                    float progress = (_value / (float)_maxvalue) * 100f;
-                    float pbwidth = (_progwidth / 100f) * progress;
-                    for (int i = 0; i < pbwidth; i++)
-                    {
-                        Console.ForegroundColor = SeparatorColor;
-                        Console.Write(_showSeparator ? "_" : " ");
-                    }
-                    Console.ResetColor();
-
-                    if (_showPercent)
-                    {
-                        Console.CursorLeft = _cwidth;
-                        Console.WriteLine($" {progress.ToString("0.00")}%");
-                    }
-
-                    Console.CursorTop = _cursortop;
-                    Console.CursorLeft = _cursorleft;
+                    DrawProgress(_value);
                 }
             }
+        }
+
+        private void DrawProgress(int value)
+        {
+            int _cursortop = Console.CursorTop;
+            int _cursorleft = Console.CursorLeft;
+
+            Console.CursorTop = _csrtop;
+            Console.CursorLeft = _csrleft;
+            Console.BackgroundColor = ProgressColor;
+
+            float progress = (value / (float)_maxvalue) * 100f;
+            float pbwidth = (_progwidth / 100f) * progress;
+            for (int i = 0; i < pbwidth; i++)
+            {
+                Console.ForegroundColor = SeparatorColor;
+                Console.Write(_showSeparator ? "_" : " ");
+            }
+            Console.ResetColor();
+
+            if (_showPercent)
+            {
+                Console.CursorLeft = _cwidth;
+                Console.WriteLine($" {progress.ToString("0.00")}%");
+            }
+
+            Console.CursorTop = _cursortop;
+            Console.CursorLeft = _cursorleft;
         }
     }
 }

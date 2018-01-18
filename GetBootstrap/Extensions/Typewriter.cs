@@ -12,12 +12,12 @@ namespace System.Extensions
         {
             if (min > max)
             {
-                throw new ArgumentOutOfRangeException("'min' cannot be greater than 'max' value.");
+                throw new ArgumentOutOfRangeException("'min' should not be greater than 'max' value.");
             }
 
             if (min < 0)
             {
-                throw new ArgumentOutOfRangeException("'min' cannot be less than to 0.");
+                throw new ArgumentOutOfRangeException("'min' should not be less than to 0.");
             }
 
             _maxDelay = max;

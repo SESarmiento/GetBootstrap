@@ -32,17 +32,17 @@ namespace GetBootstrap
 
             ProgressBar pb = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 3);
             pb.Width = 50;
-            pb.WriteLine();
+            pb.DrawProgressBar();
             
             ProgressBar pb1 = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 2);
             pb1.ProgressColor = ConsoleColor.DarkBlue;
             pb1.Width = 75;
-            pb1.WriteLine();
+            pb1.DrawProgressBar();
 
             ProgressBar pb2 = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 1);
             pb2.ProgressColor = ConsoleColor.DarkMagenta;
             pb2.Width = 100;
-            pb2.WriteLine();
+            pb2.DrawProgressBar();
 
             Bootstrap.WriteLine("Adjustable Typewriter Speed", type: BootstrapType.Info);
 

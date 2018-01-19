@@ -5,40 +5,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace System.Extensions
 {
-    public partial class Logger
+    internal class LoggerXmlFile
     {
-        private static string _name;
-        private static string _dir;
-        private static string _filename;
+        private string _name;
+        private string _dir;
+        private string _filename;
 
-        private static void SetLoggerInfo(string name)
-        {
-            SetLoggerInfo(name, null);
-        }
-
-        private static void SetLoggerInfo(string name, string dir)
-        {
-            SetLoggerInfo(name, dir, null);
-        }
-
-        private static void SetLoggerInfo(string name, string dir, string fileName)
+        public LoggerXmlFile(string name, string path, string filename)
         {
             _name = name;
-            _dir = String.IsNullOrWhiteSpace(dir) ? "Logs" : dir;
-            _filename = String.IsNullOrWhiteSpace(fileName) ? "log.xml" : fileName;
+            _dir = path;
+            _filename = filename;
         }
 
-        private void WriteLog(DateTime now, string level, string format)
-        {
-            GenerateXmlFile();
-            XmlWrite(now, level, format);
-        }
-
-        private void XmlWrite(DateTime now, string level, string format)
+        internal void XmlWrite(DateTime now, string level, string format)
         {
             string fileDir = $"{_dir}/{_filename}";
 
@@ -77,7 +60,7 @@ namespace System.Extensions
             xml.Save(fileDir);
         }
 
-        private void GenerateXmlFile()
+        internal void GenerateXmlFile()
         {
             if (!Directory.Exists(_dir))
             {
@@ -94,7 +77,7 @@ namespace System.Extensions
                 using (var xml = XmlWriter.Create(fileDir, xmlSettings))
                 {
                     xml.WriteStartDocument();
-                    string pitext = $"type=\"text/xsl\" href=\"LoggerThemes/default.xslt\"";
+                    string pitext = $"type=\"text/xsl\" href=\"../XSLT/default.xslt\"";
                     xml.WriteProcessingInstruction("xml-stylesheet", pitext);
                     xml.WriteStartElement("GetBootstrap");
                     xml.WriteEndDocument();

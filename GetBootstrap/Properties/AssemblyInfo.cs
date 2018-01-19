@@ -7,10 +7,15 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 [assembly: AssemblyTitle("GetBootstrap")]
 [assembly: AssemblyDescription("Console Application Customization")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+#if DEBUG
+[assembly: AssemblyConfiguration("Debug")]
+#else
+[assembly: AssemblyConfiguration("Release")]
+#endif
+
+[assembly: AssemblyCompany("GitHub")]
 [assembly: AssemblyProduct("GetBootstrap")]
-[assembly: AssemblyCopyright("Copyright (c) 2018 Leonel Sarmiento")]
+[assembly: AssemblyCopyright("Copyright ©  2018 Leonel Sarmiento")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +25,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("bb697b55-a7b5-462b-bfdc-adf256216c8b")]
+[assembly: Guid("72c41517-4523-4134-bad6-5fd6d48660d3")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,4 +38,4 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.8.*")]
-[assembly: AssemblyFileVersion("2.8.6.0")]
+[assembly: AssemblyFileVersion("2.8.6.19")]

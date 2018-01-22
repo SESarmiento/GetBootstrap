@@ -11,19 +11,22 @@ namespace System.Customization
     {
         internal static void SetBufferAppearance(BootstrapTheme theme, BootstrapType type, BootstrapStyle style, bool fillLineBackground)
         {
-            string descTheme = EnumExtension.GetDescription(theme);
-            string descType = EnumExtension.GetDescription(type);
-
-            string fgColor = (theme != BootstrapTheme.LigthColor ? descType : $"Dark{descType}");
-            string bgColor = (theme != BootstrapTheme.LigthColor ? $"Dark{descType}" : descType);
-
-            if (style == BootstrapStyle.Text)
+            lock (Bootstrap.Threads)
             {
-                fgColor = (theme != BootstrapTheme.LigthColor ? $"Dark{descType}" : descType);
-            }
+                string descTheme = EnumExtension.GetDescription(theme);
+                string descType = EnumExtension.GetDescription(type);
 
-            Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), fgColor, true);
-            Console.BackgroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), (style != BootstrapStyle.Text ? bgColor : "Black"), true);
+                string fgColor = (theme != BootstrapTheme.LigthColor ? descType : $"Dark{descType}");
+                string bgColor = (theme != BootstrapTheme.LigthColor ? $"Dark{descType}" : descType);
+
+                if (style == BootstrapStyle.Text)
+                {
+                    fgColor = (theme != BootstrapTheme.LigthColor ? $"Dark{descType}" : descType);
+                }
+
+                Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), fgColor, true);
+                Console.BackgroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), (style != BootstrapStyle.Text ? bgColor : "Black"), true);
+            }
 
             FillLineBackground(fillLineBackground);
         }

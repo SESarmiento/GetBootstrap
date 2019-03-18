@@ -2,6 +2,7 @@
 
 This project created to ease the customization of CSharp Console Application and provide usefull adds-on that can help devs to their current and future console projects.
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e3618fb612bf4b8ba526b6de94f35203)](https://app.codacy.com/app/SESarmiento/GetBootstrap?utm_source=github.com&utm_medium=referral&utm_content=SESarmiento/GetBootstrap&utm_campaign=Badge_Grade_Dashboard)
 [![Master build status](https://ci.appveyor.com/api/projects/status/btq8youx0uc1lnxj/branch/master?svg=true&passingText=master%20•%20pass&failingText=master%20•%20fail&pendingText=master%20•%20pending)](https://ci.appveyor.com/project/devlsarmiento/getbootstrap/branch/master)
 [![Pre-Master build status](https://ci.appveyor.com/api/projects/status/btq8youx0uc1lnxj/branch/pre-master?svg=true&passingText=pre-master%20•%20pass&failingText=pre-master%20•%20fail&pendingText=pre-master%20•%20pending)](https://ci.appveyor.com/project/devlsarmiento/getbootstrap/branch/pre-master)
 [![Code-Integration build status](https://ci.appveyor.com/api/projects/status/btq8youx0uc1lnxj/branch/code-integration?svg=true&passingText=code-integration%20•%20pass&failingText=code-integration%20•%20fail&pendingText=code-integration%20•%20pending)](https://ci.appveyor.com/project/devlsarmiento/getbootstrap/branch/code-integration)

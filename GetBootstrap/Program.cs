@@ -1,76 +1,93 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Customization;
 using System.Diagnostics;
 using System.Extensions;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace GetBootstrap
+namespace System
 {
     class Program
     {
-        static void Main(string[] args)
+        private static Random _random;
+        private static int _rank = 1;
+
+        static void Main()
         {
+            Version buildver = Assembly.GetEntryAssembly().GetName().Version;
             Assembly assembly = Assembly.GetExecutingAssembly();
             FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
+            string releasever = fvi.FileVersion;
 
-            Console.Title = $"GetBootstrap v{version}";
-            Bootstrap.Logger = Logger.GetLogger("GetBootstrap");
-            Bootstrap.Write("DEVELOPER:", BootstrapType.Info, BootsrapStyle.Alert);
-            Bootstrap.Write( " Leonel Sarmiento - ");
-            Bootstrap.WriteLine("Leonel.Sarmiento@outlook.com", BootstrapType.Success);
-            Bootstrap.Write("BOOTSTRAP:", BootstrapType.Magenta, BootsrapStyle.Alert);
-            Bootstrap.WriteLine($" Build {Assembly.GetEntryAssembly().GetName().Version}");
-            Bootstrap.Write("BOOTSTRAP:", BootstrapType.Magenta, BootsrapStyle.Alert);
-            Bootstrap.WriteLine($" Release {version}");
+            Console.Title = $"GetBootstrap";
+            Bootstrap.Write("DEVELOPER:", BootstrapType.Info, BootstrapStyle.Alert);
+            Bootstrap.Write(" Leonel Sarmiento - ");
+            Bootstrap.WriteLine("leonel.sarmiento@outlook.com", BootstrapType.Success);
+            Bootstrap.Write("BOOTSTRAP:", BootstrapType.Magenta, BootstrapStyle.Alert);
+            Bootstrap.WriteLine($" Build {buildver}");
+            Bootstrap.Write("BOOTSTRAP:", BootstrapType.Magenta, BootstrapStyle.Alert);
+            Bootstrap.WriteLine($" Release {releasever}");
             Console.ReadKey();
-            
-            Bootstrap.WriteLine("Customize Progress Bar", type: BootstrapType.Info);
 
-            ProgressBar pb = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 3);
-            pb.Width = 50;
-            pb.WriteLine();
-            
-            ProgressBar pb1 = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 2);
-            pb1.ProgressColor = ConsoleColor.DarkBlue;
-            pb1.Width = 75;
-            pb1.WriteLine();
-
-            ProgressBar pb2 = new ProgressBar(Enum.GetNames(typeof(BootstrapType)).Length * 1);
-            pb2.ProgressColor = ConsoleColor.DarkMagenta;
-            pb2.Width = 100;
-            pb2.WriteLine();
-
-            Bootstrap.WriteLine("Adjustable Typewriter Speed", type: BootstrapType.Info);
-
-            foreach (var name in Enum.GetNames(typeof(BootstrapType)))
+            Bootstrap.WriteLine("The Cyber Horse Race ~ 2018 ~ ");
+            _random = new Random();
+            float km = 1;
+            foreach (var color in Enum.GetNames(typeof(ConsoleColor)).Where(c => c != "Gray").OrderByDescending(c => c))
             {
-                pb.Increment();
-                pb1.Increment();
-                pb2.Increment();
-                Typewriter.WriteLine($"{name}", style: BootsrapStyle.Alert, type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name), fill: true);
+                ProgressBarTest(new ProgressBar() { MaxValue = (int)(3600 * km), ProgressColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor), color) });
             }
+            Console.Read();
+        }
 
-            Bootstrap.WriteLine("Light and Dark Themes", type: BootstrapType.Info);
+        private static void ProgressBarTest(ProgressBar pb)
+        {
+            pb.DisplayPercentage = true;
+            pb.DisplaySeparator = true;
+            pb.Width = 100;
+            pb.DrawProgressBar();
+            int sanity = 100;
+            int tired = 1000;
+            new Thread(() => {
+                do
+                {
+                    // whip hit
+                    int hit = _random.Next(0, 10);
+                    // horse mps
+                    pb.Value += _random.Next(11, 21) + (hit * 7);
+                    // second
+                    Thread.Sleep(tired - sanity);
 
-            foreach (var name in Enum.GetNames(typeof(BootstrapType)))
-            {
-                pb.Increment();
-                pb1.Increment();
-                Typewriter.Write($"{name}", style: BootsrapStyle.Alert, type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name), fill: true);
-            }
 
-            Console.WriteLine();
+                    if (sanity <= 0)
+                    {
+                        if (tired <= 1000)
+                        {
+                            new Bootstrap().Fatal($"Horse Exhausted:{Enum.GetName(typeof(ConsoleColor), pb.ProgressColor)}\n");
+                        }
+                        tired += (hit + 1) * 2;
+                    }
+                    else
+                    {
+                        sanity -= _random.Next(0, hit);
+                        sanity += _random.Next(0, 2);
+                    }
 
-            foreach (var name in Enum.GetNames(typeof(BootstrapType)))
-            {
-                pb.Increment();
-                Bootstrap.Write($"{name}", type: (BootstrapType)Enum.Parse(typeof(BootstrapType), name));
-            }
-            Console.ReadLine();
+                    if (pb.Value >= pb.MaxValue)
+                    {
+                        pb.Value = pb.MaxValue;
+                    }
+                } while (pb.Value < pb.MaxValue);
+
+                lock (Bootstrap.Threads)
+                {
+                    Console.WriteLine($"RANK {_rank}:{Enum.GetName(typeof(ConsoleColor), pb.ProgressColor)}");
+                }
+                _rank++;
+            }).Start();
         }
     }
 }

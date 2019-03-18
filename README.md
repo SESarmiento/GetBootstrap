@@ -60,7 +60,7 @@ ProgressBar probar = new ProgressBar(100) {
 	Width = 100,
 	ProgressColor = ConsoleColor.DarkCyan
 };
-probar.WriteLine();
+probar.DrawProgressBar();
 for (int i = 0; i < probar.MaxValue; i++) {
 	probar.Increment();
 	Bootstrap.Write($"{i}");

@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{72C41517-4523-4134-BAD6-5FD6D48660D3}</ProjectGuid>
+    <ProjectGuid>{BB697B55-A7B5-462B-BFDC-ADF256216C8B}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>System</RootNamespace>
-    <AssemblyName>GetBootstrap</AssemblyName>
+    <AssemblyName>GetBootstrap.Old</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,6 +23,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -31,9 +33,6 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Icon.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -47,25 +46,33 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bootstrap.cs" />
-    <Compile Include="Customization\Customize.cs" />
-    <Compile Include="Extensions\EnumExtension.cs" />
+    <Compile Include="Bootstrap.Designer.cs">
+      <DependentUpon>Bootstrap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\Logger.Core.cs">
+      <DependentUpon>Logger.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Logger.cs" />
-    <Compile Include="Extensions\LoggerXmlFile.cs" />
     <Compile Include="Extensions\ProgressBar.cs" />
+    <Compile Include="Extensions\Typewriter.Core.cs">
+      <DependentUpon>Typewriter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Extensions\Typewriter.cs" />
-    <Compile Include="Interfaces\IBootstrapWriter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
+    <Compile Include="Bootstrap.Core.cs">
+      <DependentUpon>Bootstrap.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="Icon.ico" />
-    <Content Include="XSLT\default.xslt">
+    <Content Include="LoggerThemes\default.xslt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <Compile Include="Customization\Customize.Enums.cs" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

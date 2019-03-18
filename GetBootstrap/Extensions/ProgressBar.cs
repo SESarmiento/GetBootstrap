@@ -8,104 +8,133 @@ namespace System.Extensions
 {
     public class ProgressBar
     {
-        private int _cwidth;
-        private int _cheight;
-        private int _csrtop;
-        private int _csrleft;
-        private int _progwidth;
-        private int _value = 0;
-        private int _maxvalue;
-        private float _width = 50;
-        private bool _showPercent = true;
-        private bool _showSeparator = true;
-
-        public int Value { get => _value; set => _value = value; }
-        public int MaxValue { get => _maxvalue; set => _maxvalue = value; }
-
-        public float Width
+        public int Value
         {
-            get => _width; set
+            get => _value;
+            set
             {
-                if (value > 100)
+                _value = value;
+                if (!_isProgressBarExist)
                 {
-                    throw new ArgumentOutOfRangeException("Width must not greater than to 100");
+                    DrawProgressBar(_width);
                 }
-                else if (value < 0)
+                else
                 {
-                    throw new ArgumentOutOfRangeException("Width must not less than to 0");
+                    DrawProgress(_value);
                 }
-                _width = value;
             }
         }
+        public int MaxValue
+        {
+            get => _maxValue;
+            set
+            {
+                if (value < _value)
+                {
+                    throw new ArgumentOutOfRangeException("MaxValue", "should not be less than Value.");
+                }
 
+                _maxValue = value;
+            }
+        }         
+        /// <summary>
+        /// Set the width of progress bar.
+        /// </summary>
+        public float Width { get => _width; set => _width = value; }
+        public bool DisplayPercentage { get; set; }
+        public bool DisplaySeparator { get; set; }
         public ConsoleColor BackgroundColor { get; set; } = ConsoleColor.Gray;
-        public ConsoleColor ProgressColor { get; set; } = ConsoleColor.Cyan;
-        public ConsoleColor SeparatorColor { get; set; } = ConsoleColor.Gray;
-        public bool ShowPercent { get => _showPercent; set => _showPercent = value; }
-        public bool ShowSeparator { get => _showSeparator; set => _showSeparator = value; }
+        public ConsoleColor ProgressColor { get; set; } = ConsoleColor.DarkCyan;
 
-        public ProgressBar(int maxValue = 100)
+        private bool _isProgressBarExist;
+        private int _progressBarWidth;
+        private int _cursorTop;
+        private int _cursorLeft;
+        private int _bufferHeight;
+        private int _bufferWidth;
+        private int _value = 0;
+        private float _width = 50;
+        private int _maxValue = 100;
+        private string _percentageText;
+
+        public void DrawProgressBar() => DrawProgressBar(_width);
+        
+        public void DrawProgressBar(float width)
         {
-            _maxvalue = maxValue;
-        }
-
-        public void Write()
-        {
-            _cwidth = (int)(((Console.BufferWidth - (_showPercent ? 7 : 0)) / 100f) * _width);
-            _cheight = Console.BufferHeight;
-            _csrtop = Console.CursorTop;
-            _csrleft = Console.CursorLeft;
-
-            _progwidth = 0;
-            for (int i = 0; i < _cwidth - _csrleft; i++)
+            lock (Bootstrap.Threads)
             {
+                _width = width;
+                _isProgressBarExist = true;
+                _bufferWidth = (int)(((Console.BufferWidth - (DisplayPercentage ? 7 : 0)) / 100f) * _width);
+                _bufferHeight = Console.BufferHeight;
+                _cursorTop = Console.CursorTop;
+                _cursorLeft = Console.CursorLeft;
+
                 Console.BackgroundColor = BackgroundColor;
-                Console.ForegroundColor = SeparatorColor;
-                Console.Write(_showSeparator ? "_" : " ");
-                _progwidth++;
-            }
-        }
+                Console.ForegroundColor = BackgroundColor;
 
-        public void WriteLine()
-        {
-            Write();
-            Console.WriteLine();
-        }
-
-        public void Increment(int increment = 1)
-        {
-            lock (Bootstrap._threads)
-            {
-                _value += increment;
-                if (_value <= _maxvalue)
+                _progressBarWidth = 0;
+                StringBuilder progressBarBuilder = new StringBuilder();
+                for (int i = 0; i < _bufferWidth - _cursorLeft; i++)
                 {
-                    int _cursortop = Console.CursorTop;
-                    int _cursorleft = Console.CursorLeft;
-
-                    Console.CursorTop = _csrtop;
-                    Console.CursorLeft = _csrleft;
-                    Console.BackgroundColor = ProgressColor;
-
-                    float progress = (_value / (float)_maxvalue) * 100f;
-                    float pbwidth = (_progwidth / 100f) * progress;
-                    for (int i = 0; i < pbwidth; i++)
-                    {
-                        Console.ForegroundColor = SeparatorColor;
-                        Console.Write(_showSeparator ? "_" : " ");
-                    }
-                    Console.ResetColor();
-
-                    if (_showPercent)
-                    {
-                        Console.CursorLeft = _cwidth;
-                        Console.WriteLine($" {progress.ToString("0.00")}%");
-                    }
-
-                    Console.CursorTop = _cursortop;
-                    Console.CursorLeft = _cursorleft;
+                    progressBarBuilder.Append(DisplaySeparator ? "_" : " ");
+                    _progressBarWidth++;
                 }
+                Console.WriteLine(progressBarBuilder);
+            }
+
+            DrawProgress(_value);
+        }
+
+        private void DrawProgress(int value)
+        {
+            lock (Bootstrap.Threads)
+            {
+                if (value < 0)
+                {
+                    return;
+                }
+
+                int cursorTop = Console.CursorTop;
+                int cursorLeft = Console.CursorLeft;
+
+                Console.CursorTop = _cursorTop;
+                Console.CursorLeft = _cursorLeft;
+                Console.BackgroundColor = ProgressColor;
+
+                float progress = ((value) / ((float)MaxValue)) * 100f;
+                float progressWidth = (_progressBarWidth / 100f) * progress;
+
+
+                Console.ForegroundColor = BackgroundColor;
+                StringBuilder progressBuilder = new StringBuilder();
+
+                for (int i = 0; i < progressWidth; i++)
+                {
+                    if (progressWidth <= _progressBarWidth)
+                    {
+                        progressBuilder.Append(DisplaySeparator ? "_" : " ");
+                    }
+                }
+
+                Console.Write(progressBuilder);
+
+                Console.ResetColor();
+
+                if (DisplayPercentage)
+                {
+                    Console.CursorLeft = _bufferWidth;
+
+                    if (progressWidth <= _progressBarWidth)
+                    {
+                        _percentageText = progress.ToString("0.00");
+                    }
+                    Console.WriteLine($" {_percentageText}%");
+                }
+
+                Console.CursorTop = cursorTop;
+                Console.CursorLeft = cursorLeft;
             }
         }
     }
 }
-

@@ -1,66 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Customization;
+using System.Interfaces;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace System.Extensions
 {
-    public partial class Logger
+    public class Logger : Bootstrap
     {
-        public Logger()
+        private LoggerXmlFile _loggerXmlFile;
+
+        public Logger(string name, string path, string filename)
         {
-            SetLoggerInfo("GetBootstrap");
+            _loggerXmlFile = new LoggerXmlFile(name, path, filename);
         }
 
-        public Logger(string name, string dir, string fileName)
+        public static Logger GetLogger(string name, string path = "logs", string filename = "log.xml")
         {
-            SetLoggerInfo(name, dir, fileName);
+            return new Logger(name, path, filename);
+        }
+        
+        public void Log(string format)
+        {
+            _loggerXmlFile.XmlWrite(DateTime.Now, "LOGGER", format);
         }
 
-        public void Debug(string format)
+        public BootstrapType Log(string format, BootstrapType type)
         {
-            WriteLog(DateTime.Now, "DEBUG", format);
+            _loggerXmlFile.XmlWrite(DateTime.Now, EnumExtension.GetDescription(type), format);
+            return type;
         }
 
-        public void Pass(string format)
+        public override BootstrapType Debug(string format)
         {
-            WriteLog(DateTime.Now, "PASS", format);
+            return Log(format, base.Debug(format));
         }
 
-        public void Info(string format)
+        public override BootstrapType Pass(string format)
         {
-            WriteLog(DateTime.Now, "INFO", format);
+            return Log(format, base.Pass(format));
         }
 
-        public void Warn(string format)
+        public override BootstrapType Info(string format)
         {
-            WriteLog(DateTime.Now, "WARN", format);
+            return Log(format, base.Info(format));
         }
 
-        public void Fatal(string format)
+        public override BootstrapType Warn(string format)
         {
-            WriteLog(DateTime.Now, "FATAL", format);
+            return Log(format, base.Warn(format));
         }
 
-        public void Magenta(string format)
+        public override BootstrapType Fatal(string format)
         {
-            WriteLog(DateTime.Now, "MAGENTA", format);
+            return Log(format, base.Fatal(format));
         }
 
-        public void Cobalt(string format)
+        public override BootstrapType Magenta(string format)
         {
-            WriteLog(DateTime.Now, "COBALT", format);
+            return Log(format, base.Magenta(format));
         }
 
-        public void Write(string level, string format)
+        public override BootstrapType Cobalt(string format)
         {
-            WriteLog(DateTime.Now, level, format);
-        }
-
-        public static Logger GetLogger(string name, string dir = "logs", string fileName = "log.xml")
-        {
-            return new Logger(name, dir, fileName);
+            return Log(format, base.Cobalt(format));
         }
     }
 }

@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetBootstrap", "GetBootstrap\GetBootstrap.csproj", "{BB697B55-A7B5-462B-BFDC-ADF256216C8B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetBootstrap.Old", "GetBootstrap.Old\GetBootstrap.Old.csproj", "{BB697B55-A7B5-462B-BFDC-ADF256216C8B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GetBootstrap", "GetBootstrap\GetBootstrap.csproj", "{72C41517-4523-4134-BAD6-5FD6D48660D3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{BB697B55-A7B5-462B-BFDC-ADF256216C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB697B55-A7B5-462B-BFDC-ADF256216C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB697B55-A7B5-462B-BFDC-ADF256216C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72C41517-4523-4134-BAD6-5FD6D48660D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72C41517-4523-4134-BAD6-5FD6D48660D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72C41517-4523-4134-BAD6-5FD6D48660D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72C41517-4523-4134-BAD6-5FD6D48660D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,58 +1,77 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Extensions;
+using System.Customization;
+using System.Interfaces;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace System
 {
-    public static partial class Bootstrap
+    public class Bootstrap : IBootstrapWriter
     {
-        public static BootstrapTheme Theme { get => _theme; set => _theme = value; }
-        public static Logger Logger { get => _logger; set => _logger = value; }
+        internal static object[] Threads { get; set; } = new object[] { };
 
-        public static int BeepDuration
+        public static BootstrapTheme BootstrapTheme { get; set; } = BootstrapTheme.DarkColor;
+
+        internal static BootstrapType ConsoleWriter(string format, BootstrapType type, BootstrapStyle style, bool fillLineBackground)
         {
-            get => _duration;
-            set
+            Customize.SetBufferAppearance(BootstrapTheme, type, style, fillLineBackground);
+
+            char[] chars = format.ToCharArray();
+
+            lock (Threads)
             {
-                if (value < 1)
-                {
-                    throw new ArgumentOutOfRangeException("Beep duration must not be less than to 1.");
-                }
-                else
-                {
-                    _duration = value;
-                }
+                Console.Write(chars);
+                Console.ResetColor();
             }
+            return type;
+        }
+        
+        public static void Write(string format, BootstrapType type = BootstrapType.Default, BootstrapStyle style = BootstrapStyle.Text, bool fillLineBackground = false)
+        {
+            ConsoleWriter(format, type, style, fillLineBackground);
         }
 
-        public static int BeepFrequency
+        public static void WriteLine(string format = "", BootstrapType type = BootstrapType.Default, BootstrapStyle style = BootstrapStyle.Text, bool fillLineBackground = false)
         {
-            get => _frequency;
-            set
-            {
-                if (value < 37 || value > 32767)
-                {
-                    throw new ArgumentOutOfRangeException("Beep frequency must not less than to 73 nor greater than to 32767.");
-                }
-                else
-                {
-                    _frequency = value;
-                }
-            }
-        }
-
-        public static void Write(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = false)
-        {
-            Writer(format, type, style, fill, beep);
-        }
-
-        public static void WriteLine(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = false)
-        {
-            Writer(format, type, style, fill, beep);
+            ConsoleWriter(format, type, style, fillLineBackground);
             Console.WriteLine();
+        }
+
+        public virtual BootstrapType Debug(string format)
+        {
+            return ConsoleWriter(format, BootstrapType.Default, BootstrapStyle.Text, false);
+        }
+
+        public virtual BootstrapType Pass(string format)
+        {
+            return ConsoleWriter(format, BootstrapType.Success, BootstrapStyle.Text, false);
+        }
+
+        public virtual BootstrapType Info(string format)
+        {
+            return ConsoleWriter(format, BootstrapType.Info, BootstrapStyle.Text, false);
+        }
+
+        public virtual BootstrapType Warn(string format)
+        {
+            return ConsoleWriter(format, BootstrapType.Warning, BootstrapStyle.Text, false);
+        }
+
+        public virtual BootstrapType Fatal(string format)
+        {
+            return ConsoleWriter(format, BootstrapType.Danger, BootstrapStyle.Text, false);
+        }
+
+        public virtual BootstrapType Magenta(string format)
+        {
+            return ConsoleWriter(format, BootstrapType.Magenta, BootstrapStyle.Text, false);
+        }
+
+        public virtual BootstrapType Cobalt(string format)
+        {
+            return ConsoleWriter(format, BootstrapType.Cobalt, BootstrapStyle.Text, false);
         }
     }
 }

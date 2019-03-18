@@ -16,7 +16,7 @@ namespace System
         private static Logger _logger;
         internal static object[] _threads = new object[] { };
 
-        static void Writer(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = false)
+        private static void Writer(string format, BootstrapType type = BootstrapType.Default, BootsrapStyle style = BootsrapStyle.Text, bool fill = false, bool beep = false)
         {
             PerformBeep(beep);
 
